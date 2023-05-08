@@ -1,0 +1,10 @@
+[Unit]
+Description=rc auto set can
+After=network-online.target
+[Service]
+User=robocon
+Type=simple
+#Type=forking
+ExecStart=/bin/bash -c "/home/robocon/AutoSetCan.sh"
+[Install]
+WantedBy=multi-user.target

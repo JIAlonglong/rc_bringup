@@ -1,0 +1,9 @@
+[Unit]
+Description=rc control rosbag record
+After=rc_start.service
+[Service]
+User=robocon
+Type=simple
+ExecStart=/bin/bash -c "/home/robocon/control_rosbag_record.sh"
+[Install]
+WantedBy=multi-user.target

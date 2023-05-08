@@ -1,0 +1,10 @@
+[Unit]
+Description=rc auto set radar
+After=network-online.target
+[Service]
+User=robocon
+Type=simple
+#Type=forking
+ExecStart=/bin/bash -c "/home/robocon/AutoSetRadar.sh"
+[Install]
+WantedBy=multi-user.target

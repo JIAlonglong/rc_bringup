@@ -1,0 +1,10 @@
+[Unit]
+Description=rc auto start ros master
+After=network-online.target
+[Service]
+User=robocon
+Type=simple
+#Type=forking
+ExecStart=/bin/bash -c "~/start_ros_master.sh"
+[Install]
+WantedBy=multi-user.target
