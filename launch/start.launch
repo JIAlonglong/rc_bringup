@@ -1,24 +1,31 @@
 <launch>
     <arg name="robot_type" default="$(env ROBOT_TYPE)" doc="Robot_type [rabbit,elephant]"/>
-    <arg name="load_gazebo" default="true"/>
+    <arg name="load_gazebo" default="false"/>
     <arg name="load_controller" default="true"/>
-    <arg name="load_hw" default="false"/>
+    <arg name="load_hw" default="true"/>
     <arg name="load_decision" default="true"/>
     <arg name="load_radar" default="true"/>
+    <arg name="load_lakibeam_radar" default="false"/>
     <arg name="load_navigation" default="true"/>
     <arg name="load_rf2o" default="false"/>
+    <arg name="load_ladar_pkg" default="true"/>
     <arg name="rc_map" default="field_rc21" doc="field_rc21,field_rc23"/>
 
     <rosparam file="$(find rc_config)/config/rc_control/rc_hw/$(arg robot_type).yaml" command="load"/>
     <rosparam file="$(find rc_config)/config/rc_controllers/$(arg robot_type).yaml" command="load"/>
     <rosparam file="$(find rc_config)/config/rc_decision/$(arg robot_type)/bt_xml/control_loop.xml" command="load"/>
-
+    <!--rc_software-->
     <include if="$(arg load_gazebo)" file="$(find rc_gazebo)/launch/$(arg rc_map).launch"/>
     <include if="$(arg load_hw)" file="$(find rc_config)/launch/rc_hw.launch"/>
     <include if="$(arg load_controller)" file="$(find rc_config)/launch/load_controllers.launch"/>
     <include if="$(arg load_decision)" file="$(find rc_decision)/launch/control_loop.launch"/>
+    <include if="$(arg load_ladar_pkg)" file="$(find ladar_pkg)/launch/running.launch"/>
+    <include file="$(find $(arg robot_type))/launch/$(arg robot_type).launch"/>
+    <!--offical_software-->
     <include if="$(arg load_radar)" file="$(find urg_node)/launch/urg_lidar.launch"/>
+    <!--&lt;!&ndash;/scan01&ndash;&gt;ladar_pkg-->
+    <include if="$(arg load_lakibeam_radar)" file="$(find lakibeam1_ros_v1_0_0)/launch/lakibeam1_scan.launch"/>
+    <!--&lt;!&ndash;/scan&ndash;&gt;navigator-->
     <include if="$(arg load_navigation)" file="$(find rc_navigation)/launch/rc_navigation.launch"/>
     <include if="$(arg load_rf2o)" file="$(find rf2o_laser_odometry)/launch/rf2o_laser_odometry.launch"/>
-    <include file="$(find $(arg robot_type))/launch/$(arg robot_type).launch"/>
 </launch>
