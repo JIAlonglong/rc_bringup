@@ -1,0 +1,3 @@
+<launch>
+    <node type="ros_qt5_gui_app" pkg="ros_qt5_gui_app" name="ros_qt5_gui_app"/>
+</launch>
